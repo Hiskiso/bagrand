@@ -67,6 +67,7 @@ button:hover {
 }
 
 .player{
+    position: absolute; 
     display: none;
     background-color: #ffff;
     width: 70px;

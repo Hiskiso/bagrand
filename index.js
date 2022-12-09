@@ -33,8 +33,8 @@ function initGame() {
     let randomColor
     let playerColor
 
-    player.style.top = Math.round(Math.random()* (window.innerHeight - 0) + 0)
-    player.style.left = Math.round(Math.random()* (window.innerWidth - 0) + 0)
+    player.style.top = Math.round(Math.random()* (window.innerHeight - 0) + 0)+"px"
+    player.style.left = Math.round(Math.random()* (window.innerWidth - 0) + 0)+"px"
 
 
     if (initColor < 50) {
@@ -61,7 +61,6 @@ function initGame() {
         let shiftY = event.clientY - player.getBoundingClientRect().top;
 
         player.style.position = 'absolute';
-        player.style.zIndex = 1000;
         document.body.append(player);
 
         moveAt(event.pageX, event.pageY);
