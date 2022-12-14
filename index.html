@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>BagRand</title>
 </head>
+
 <body>
     <div class="main">
         <div class="game">
@@ -15,20 +16,41 @@
         </div>
     </div>
     <div class="modal" id="modal">
-        <div class="content">
+        <div class="content" id="content">
             <div class="header">
-                Background Ranodm
+                Background Random
             </div>
             <div class="description">
                 Игра в которой требуется подобрать цвет круга в цвет фона
             </div>
-            <div class="start">
-                <button class="ds-btn" id="start-game">Начать</button>
-            </div>
+            <form action="" id="diffs">
+                <div class="diff">
+                    <div class="header">
+                        Сложность
+                    </div>
+                    <div class="diffs">
+
+
+                        <button class="ds-btn" data-diff="0">1</button>
+                        <button class="ds-btn" data-diff="1">2</button>
+                        <button class="ds-btn" data-diff="2">3</button>
+                        <button class="ds-btn" data-diff="3">4</button>
+                        <button class="ds-btn" data-diff="4">5</button>
+                        <button class="ds-btn" data-diff="5">6</button>
+                        <button class="ds-btn" data-diff="6">7</button>
+
+
+                    </div>
+
+                </div>
+                <div class="start">
+                    <button class="ds-btn" id="start-game">Начать</button>
+                </div>
+            </form>
         </div>
     </div>
     <div style="display: none;" class="modal" id="win">
-        <div class="content">
+        <div class="content" id="content">
             <div class="header">
                 Ура ура Молодец ты выйграл, такое под силу 3% населения
             </div>
@@ -40,6 +62,20 @@
             </div>
         </div>
     </div>
+    <div style="display: none;" class="modal" id="loss">
+        <div class="content" id="content">
+            <div class="header">
+                Ебать ты лох ботинок... слит
+            </div>
+            <div class="description">
+                Время <span id="time"></span>
+            </div>
+            <div class="start">
+                <button class="ds-btn" id="restart-game">Начать</button>
+            </div>
+        </div>
+    </div>
     <script src="index.js"></script>
 </body>
+
 </html>

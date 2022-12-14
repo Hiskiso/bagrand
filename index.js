@@ -1,58 +1,83 @@
 let modal = document.getElementById("modal")
-let btnStart = document.getElementById("start-game")
-let btnREStart = document.getElementById("restart-game")
+let btnREStart = document.querySelectorAll("#restart-game")
 let player = document.getElementById("player")
 let winModal = document.getElementById("win")
-let timeEl = document.getElementById("time")
+let loss = document.getElementById("loss")
 let screen = document.body
+let diff
+
+let difficulty = [999, 60, 30, 10, 3, 2, 1]
+
+diffs.addEventListener("submit", (e) => {
+    e.preventDefault()
+    console.log(e);
+    if (e.submitter.id == "start-game") {
+        initGame()
+    }
+    if (e.submitter.dataset) {
+        diff = difficulty[Number(e.submitter.dataset.diff)]
+    }
+})
 
 
+let _ = [...btnREStart].map(el=>{el.addEventListener("click", () => { location.reload() })})
 
-btnStart.addEventListener("click", initGame)
-btnREStart.addEventListener("click", ()=>{location.reload()})
+let initColor = Math.floor(Math.random() * (150 - 0) + 0)
+
+let randomColor
+let playerColor
+if (initColor < 50) {
+
+    randomColor = `rgb(${getRnadomColor()},10,${getRnadomColor()})`
+    playerColor = `rgb(${getRnadomColor()},10,${getRnadomColor()})`
+} else if (initColor < 100) {
+
+    randomColor = `rgb(10,${getRnadomColor()},${getRnadomColor()})`
+    playerColor = `rgb(10,${getRnadomColor()},${getRnadomColor()})`
+} else {
+    randomColor = `rgb(${getRnadomColor()},${getRnadomColor()},10)`
+    playerColor = `rgb(${getRnadomColor()},${getRnadomColor()},10)`
+}
+
+screen.style.background = randomColor
+modal.querySelector("#content").style.background = randomColor
+winModal.querySelector("#content").style.background = randomColor
+
 
 function initGame() {
     modal.style.display = "none"
     player.style.display = "block"
     winModal.style.display = "none"
 
-   
+    let attempt = diff || difficulty[0]
+
+    let regexDigts = /\d+/gm
+
+    let screenColors = [...randomColor.matchAll(regexDigts)].map(el => el[0])
+    console.log(screenColors)
 
     let GameEnd = false
     let timeIterator = 1
-    setInterval(()=>{
+    setInterval(() => {
         if (!GameEnd) {
             timeIterator++
-            timeEl.textContent = timeIterator
+            winModal.querySelector("#time").textContent = timeIterator
         }
-      
-    },100)
+        if (!GameEnd) {
+            timeIterator++
+            loss.querySelector("#time").textContent = timeIterator
+        }
 
-    let initColor = Math.floor(Math.random() * (150 - 0) + 0)
-
-    let randomColor
-    let playerColor
-
-    player.style.top = Math.round(Math.random()* (window.innerHeight - 0) + 0)+"px"
-    player.style.left = Math.round(Math.random()* (window.innerWidth - 0) + 0)+"px"
-
-
-    if (initColor < 50) {
-
-        randomColor = `rgb(${getRnadomColor()},10,${getRnadomColor()})`
-        playerColor = `rgb(${getRnadomColor()},10,${getRnadomColor()})`
-    } else if (initColor < 100) {
-
-        randomColor = `rgb(10,${getRnadomColor()},${getRnadomColor()})`
-        playerColor = `rgb(10,${getRnadomColor()},${getRnadomColor()}})`
-    } else {
-        randomColor = `rgb(${getRnadomColor()},${getRnadomColor()},10)`
-        playerColor = `rgb(${getRnadomColor()},${getRnadomColor()},10})`
-    }
+    }, 100)
 
 
 
-    screen.style.background = randomColor
+    player.style.top = Math.round(Math.random() * (window.innerHeight - 0) + 0) + "px"
+    player.style.left = Math.round(Math.random() * (window.innerWidth - 0) + 0) + "px"
+
+
+
+
     player.style.background = playerColor
 
     player.onmousedown = function (event) {
@@ -74,7 +99,7 @@ function initGame() {
         function onMouseMove(event) {
 
             rect = player.getBoundingClientRect();
-            
+
 
             if (initColor < 50) {
 
@@ -92,19 +117,23 @@ function initGame() {
 
         player.onmouseup = function () {
 
-           
 
-            let regexDigts = /\d+/gm
-            
-            let playerColors = [...player.style.background.matchAll(regexDigts)]
-            let screenColors = [...randomColor.matchAll(regexDigts)]
+            attempt--
 
-            if(playerColors[0][0] >= screenColors[0][0]-10 && playerColors[0][0] <= screenColors[0][0]+10 &&  playerColors[1][0] >= screenColors[1][0]-10 && playerColors[1][0] <= screenColors[1][0]+10 && playerColors[2][0] >= screenColors[2][0]-10 && playerColors[2][0] <= screenColors[2][0]+10 ){
-               GameEnd = true
-                winModal.style.display = "block"
+
+            let playerColors = [...player.style.background.matchAll(regexDigts)].map(el => el[0])
+
+
+            if (Math.abs(playerColors[0] - screenColors[0]) < 5 && Math.abs(playerColors[1] - screenColors[1]) < 5 && Math.abs(playerColors[2] - screenColors[2] < 5)) {
+                GameEnd = true
+                winModal.style.display = "flex"
+            } else
+
+            if (attempt <= 0) {
+                GameEnd = true
+                loss.style.display = "flex"
             }
-
-
+           
             document.removeEventListener('mousemove', onMouseMove);
             player.onmouseup = null;
         };
@@ -117,5 +146,5 @@ function initGame() {
 }
 
 function getRnadomColor() {
-    return Math.floor(Math.random() * (225 - 100) + 100)
+    return Math.floor(Math.random() * (225 - 10) + 10)
 }

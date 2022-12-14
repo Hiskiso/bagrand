@@ -11,11 +11,26 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+.diffs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center
+}
 
+.diff {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
+}
+
+.start {
+    display: flex;
+    justify-content: center;
+}
 
 .modal {
-
+    background: rgb(0 2 6 / 18%);
     transition-property: display;
     transition-duration: 3s;
 
@@ -53,24 +68,25 @@ button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: 25px;
+    margin: 5px;
     position: relative;
-    width: 96px;
-    height: max-content;
     border-radius: 20px;
     padding: 9px;
     background-color: #272d39;
+    border: unset;
 }
 
 button:hover {
     background-color: #1c2029;
 }
 
-.player{
-    position: absolute; 
+
+.player {
+    position: absolute;
     display: none;
     background-color: #ffff;
     width: 70px;
     height: 70px;
     border-radius: 100px;
+    border: 3px;
 }
